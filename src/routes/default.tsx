@@ -1,5 +1,5 @@
 import { Route } from 'react-router-dom';
-import { Default } from '../components/default/index';
+import { Default } from '../components/default/Default';
 
 export const DefaultRoutes = () => {
   return (
