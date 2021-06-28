@@ -1,30 +1,37 @@
+import { Link } from 'react-router-dom';
 import { ProductsConnector } from '../../connectors/graphql/products';
-import { ProductType } from '../../types/Product';
-import { StyledListTable } from '../default/listTable';
+import { ProductData } from '../../types/Product';
+import { ListTable } from '../default/ListTable';
 
 export const ProductsList: React.FC = () => {
   const { useGetAll } = ProductsConnector();
-  const { data, error, loading } = useGetAll();
+  const { products, error, loading } = useGetAll();
 
   const ProductsList = (
-    <StyledListTable>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-      {data?.Products.map((product: ProductType, key: number) => {
-        return (
-          <tr key={key}>
-            <td>{product.name}</td>
-            <td>{product.description}</td>
-            <td>Edit</td>
-            <td>Delete</td>
-          </tr>
-        );
-      })}
-    </StyledListTable>
+    <ListTable>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((product: ProductData, key: number) => {
+          return (
+            <tr key={key}>
+              <td>{product.name}</td>
+              <td>{product.description}</td>
+              <td>
+                <Link to={`/products/${product.id}/edit`}>Edit</Link>
+              </td>
+              <td>Delete</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </ListTable>
   );
 
   return (
@@ -32,7 +39,7 @@ export const ProductsList: React.FC = () => {
       <h1>Products List</h1>
       {loading && <div>Loading</div>}
       {error && <div>Error: {error}</div>}
-      {data && ProductsList}
+      {products && ProductsList}
     </div>
   );
 };
