@@ -22,8 +22,10 @@ export class ProductOperators {
   `;
 
   static create: DocumentNode = gql`
-    mutation ($name: String, $description: String) {
-      createProduct(name: $name, description: $description)
+    mutation ($name: String!, $description: String!) {
+      createProduct(name: $name, description: $description) {
+        id
+      }
     }
   `;
 
@@ -34,7 +36,7 @@ export class ProductOperators {
   `;
 
   static remove: DocumentNode = gql`
-    mutation ($id: Int) {
+    mutation ($id: Int!) {
       deleteProduct(id: $id)
     }
   `;

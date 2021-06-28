@@ -2,26 +2,32 @@ import { ApolloError, useMutation, useQuery } from '@apollo/client';
 import { ProductOperators } from './operators';
 import { ProductData } from '../../../types/Product';
 
-interface ProductsGetAll {
+import { ConnectorMethods } from '../interface';
+
+interface AllData {
   products: ProductData[];
   error: ApolloError | undefined;
   loading: boolean;
 }
 
-interface ProductGetById {
+interface SingleItemData {
   product: ProductData;
   error: ApolloError | undefined;
   loading: boolean;
 }
 
-export const ProductsConnector = () => {
-  const useGetAll = (): ProductsGetAll => {
+export const ProductsConnector = (): ConnectorMethods<
+  AllData,
+  SingleItemData,
+  ProductData
+> => {
+  const useGetAll = (): AllData => {
     const { data, error, loading } = useQuery(ProductOperators.getAll);
     const products = data?.Products || [];
     return { products, error, loading };
   };
 
-  const useGetById = (id: string): ProductGetById => {
+  const useGetById = (id: string): SingleItemData => {
     const { data, error, loading } = useQuery(ProductOperators.getById, {
       variables: { id: parseInt(id) },
     });
@@ -29,11 +35,11 @@ export const ProductsConnector = () => {
     return { product, error, loading };
   };
 
-  const useCreate = (product: ProductData) => {
-    const [createMutation] = useMutation<ProductData>(ProductOperators.create, {
-      refetchQueries: [{ query: ProductOperators.getAll }],
-    });
+  const [createMutation] = useMutation<ProductData>(ProductOperators.create, {
+    refetchQueries: [{ query: ProductOperators.getAll }],
+  });
 
+  const create = (product: ProductData) => {
     return createMutation({
       variables: product,
     });
@@ -64,7 +70,7 @@ export const ProductsConnector = () => {
   return {
     useGetAll,
     useGetById,
-    useCreate,
+    create,
     update,
     remove,
   };

@@ -4,8 +4,6 @@ import { ProductsConnector } from '../../connectors/graphql/products';
 import { useForm } from '../../hooks/useForm';
 import { productFields, productInitialState } from '../../types/Product';
 import { FormContent } from '../default/FormContent';
-// import { ProductData } from '../../types/Product';
-// import { FormProps } from '../default/Form';
 
 interface UrlParams {
   id: string;

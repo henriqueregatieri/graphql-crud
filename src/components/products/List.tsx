@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ProductsConnector } from '../../connectors/graphql/products';
 import { ProductData } from '../../types/Product';
+import { Button } from '../styled/Button';
 import { ListTable } from '../styled/ListTable';
 
 export const ProductsList: React.FC = () => {
   const { useGetAll } = ProductsConnector();
   const { products, error, loading } = useGetAll();
+  const history = useHistory();
+
+  const goToNewProduct = () => {
+    history.push('/products/new');
+  };
 
   const ProductsList = (
     <ListTable>
@@ -37,6 +43,7 @@ export const ProductsList: React.FC = () => {
   return (
     <div>
       <h1>Products List</h1>
+      <Button onClick={goToNewProduct}>New</Button>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       {products && ProductsList}
