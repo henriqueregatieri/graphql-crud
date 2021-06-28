@@ -1,8 +1,9 @@
 import { Link, useHistory } from 'react-router-dom';
 import { ProductsConnector } from '../../connectors/graphql/products';
-import { ProductData } from '../../types/Product';
+import { productFields } from '../../types/Product';
 import { Button } from '../styled/Button';
 import { ListTable } from '../styled/ListTable';
+import { Field } from '../../types/Field';
 
 export const ProductsList: React.FC = () => {
   const { useGetAll } = ProductsConnector();
@@ -17,20 +18,22 @@ export const ProductsList: React.FC = () => {
     <ListTable>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Description</th>
+          {productFields.map((field: Field, key: number) => {
+            return <th key={key}>{field.name}</th>;
+          })}
           <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
       <tbody>
-        {products.map((product: ProductData, key: number) => {
+        {products.map((data: any, key: number) => {
           return (
             <tr key={key}>
-              <td>{product.name}</td>
-              <td>{product.description}</td>
+              {productFields.map((field: Field, key: number) => {
+                return <td key={key}>{data[field.slug]}</td>;
+              })}
               <td>
-                <Link to={`/products/${product.id}/edit`}>Edit</Link>
+                <Link to={`/products/${data.id}/edit`}>Edit</Link>
               </td>
               <td>Delete</td>
             </tr>
