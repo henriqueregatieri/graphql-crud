@@ -1,12 +1,11 @@
 import { Link, useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
-
 import { ProductsConnector } from '../../connectors/graphql/products';
 import { productFields } from '../../types/Product';
+import { Field } from '../../types/Field';
 import { Button } from '../styled/Button';
 import { Anchor } from '../styled/Anchor';
 import { ListTable } from '../styled/ListTable';
-import { Field } from '../../types/Field';
 
 export const ProductsList: React.FC = () => {
   const { useGetAll, remove } = ProductsConnector();
@@ -76,7 +75,7 @@ export const ProductsList: React.FC = () => {
       </Button>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      {products && ProductsList}
+      {products.length > 0 && ProductsList}
     </div>
   );
 };

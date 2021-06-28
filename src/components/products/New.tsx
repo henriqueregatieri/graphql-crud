@@ -4,7 +4,7 @@ import { useForm } from '../../hooks/useForm';
 import { productFields, productInitialState } from '../../types/Product';
 import { FormContent } from '../default/FormContent';
 
-export const ProductNew = () => {
+export const ProductNew: React.FC = () => {
   const history = useHistory();
   const { create } = ProductsConnector();
 

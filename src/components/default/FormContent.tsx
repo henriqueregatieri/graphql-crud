@@ -1,5 +1,5 @@
-import { Form } from '../styled/Form';
 import { IChangeElement } from '../../hooks/useForm';
+import { Form } from '../styled/Form';
 import { Button, InputButton } from '../styled/Button';
 import { Field } from '../../types/Field';
 

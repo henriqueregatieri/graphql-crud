@@ -9,7 +9,7 @@ interface UrlParams {
   id: string;
 }
 
-export const ProductEdit = () => {
+export const ProductEdit: React.FC = () => {
   const history = useHistory();
   const { useGetById, update } = ProductsConnector();
   const { id } = useParams<UrlParams>();

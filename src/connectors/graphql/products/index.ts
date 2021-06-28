@@ -1,7 +1,6 @@
 import { ApolloError, useMutation, useQuery } from '@apollo/client';
 import { ProductOperators } from './operators';
 import { ProductData } from '../../../types/Product';
-
 import { ConnectorMethods } from '../interface';
 
 interface AllData {
