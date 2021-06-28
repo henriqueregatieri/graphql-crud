@@ -1,48 +1,59 @@
-import {
-  useMutation,
-  MutationTuple,
-  OperationVariables,
-  useQuery,
-} from '@apollo/client';
-
+import { ApolloError, useMutation, useQuery } from '@apollo/client';
 import { ProductOperators } from './operators';
-import { ProductType } from '../../../types/Product';
+import { ProductData } from '../../../types/Product';
+
+interface ProductsGetAll {
+  products: ProductData[];
+  error: ApolloError | undefined;
+  loading: boolean;
+}
+
+interface ProductGetById {
+  product: ProductData;
+  error: ApolloError | undefined;
+  loading: boolean;
+}
 
 export const ProductsConnector = () => {
-  const useGetAll = () => {
-    return useQuery(ProductOperators.getAll);
+  const useGetAll = (): ProductsGetAll => {
+    const { data, error, loading } = useQuery(ProductOperators.getAll);
+    const products = data?.Products || [];
+    return { products, error, loading };
   };
 
-  const useGetById = (id: number) => {
-    return useQuery(ProductOperators.getById, {
-      variables: { id },
+  const useGetById = (id: string): ProductGetById => {
+    const { data, error, loading } = useQuery(ProductOperators.getById, {
+      variables: { id: parseInt(id) },
     });
+    const product = data?.Product;
+    return { product, error, loading };
   };
 
-  const useCreate = (product: ProductType) => {
-    const [createMutation]: MutationTuple<Function, OperationVariables> =
-      useMutation(ProductOperators.create, {
-        refetchQueries: [{ query: ProductOperators.getAll }],
-      });
+  const useCreate = (product: ProductData) => {
+    const [createMutation] = useMutation<ProductData>(ProductOperators.create, {
+      refetchQueries: [{ query: ProductOperators.getAll }],
+    });
 
     return createMutation({
       variables: product,
     });
   };
 
-  const useUpdate = (product: ProductType) => {
-    const [updateMutation] = useMutation(ProductOperators.update, {
-      refetchQueries: [{ query: ProductOperators.getAll }],
-    });
+  const [updateMutation] = useMutation<ProductData>(ProductOperators.update, {
+    refetchQueries: [{ query: ProductOperators.getAll }],
+  });
 
+  const update = (product: ProductData) => {
+    updateMutation({ variables: product });
     return updateMutation({ variables: product });
   };
 
-  const useRemove = (product: ProductType) => {
-    const [removeMutation] = useMutation(ProductOperators.remove, {
-      refetchQueries: [{ query: ProductOperators.getAll }],
-    });
+  const [removeMutation] = useMutation<ProductData>(ProductOperators.remove, {
+    refetchQueries: [{ query: ProductOperators.getAll }],
+  });
 
+  const remove = (product: ProductData) => {
+    removeMutation({ variables: product });
     return removeMutation({
       variables: {
         id: product.id,
@@ -54,7 +65,7 @@ export const ProductsConnector = () => {
     useGetAll,
     useGetById,
     useCreate,
-    useUpdate,
-    useRemove,
+    update,
+    remove,
   };
 };

@@ -12,7 +12,7 @@ export class ProductOperators {
   `;
 
   static getById: DocumentNode = gql`
-    query ($id: ID!) {
+    query ($id: Int!) {
       Product(id: $id) {
         id
         name
@@ -22,13 +22,13 @@ export class ProductOperators {
   `;
 
   static create: DocumentNode = gql`
-    mutation ($name: String, $email: String, $job_title: String) {
+    mutation ($name: String, $description: String) {
       createProduct(name: $name, description: $description)
     }
   `;
 
   static update: DocumentNode = gql`
-    mutation ($id: Int, $name: String, $email: String, $job_title: String) {
+    mutation ($id: Int!, $name: String!, $description: String!) {
       updateProduct(id: $id, name: $name, description: $description)
     }
   `;
