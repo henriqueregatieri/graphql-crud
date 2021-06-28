@@ -15,9 +15,4 @@ export const Form = styled.form`
     width: 320px;
     padding: 3px 6px;
   }
-  .button {
-    margin: 20px 10px 0 0;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
 `;

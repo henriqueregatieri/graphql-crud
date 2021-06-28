@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ProductsConnector } from '../../connectors/graphql/products';
 import { ProductData } from '../../types/Product';
-import { ListTable } from '../default/ListTable';
+import { ListTable } from '../styled/ListTable';
 
 export const ProductsList: React.FC = () => {
   const { useGetAll } = ProductsConnector();
@@ -37,7 +37,7 @@ export const ProductsList: React.FC = () => {
   return (
     <div>
       <h1>Products List</h1>
-      {loading && <div>Loading</div>}
+      {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       {products && ProductsList}
     </div>
