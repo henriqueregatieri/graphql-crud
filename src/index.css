@@ -2,3 +2,12 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
+a {
+  color: blue;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}

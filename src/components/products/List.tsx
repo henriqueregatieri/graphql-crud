@@ -1,17 +1,35 @@
 import { Link, useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
+
 import { ProductsConnector } from '../../connectors/graphql/products';
 import { productFields } from '../../types/Product';
 import { Button } from '../styled/Button';
+import { Anchor } from '../styled/Anchor';
 import { ListTable } from '../styled/ListTable';
 import { Field } from '../../types/Field';
 
 export const ProductsList: React.FC = () => {
-  const { useGetAll } = ProductsConnector();
+  const { useGetAll, remove } = ProductsConnector();
   const { products, error, loading } = useGetAll();
   const history = useHistory();
 
   const goToNewProduct = () => {
     history.push('/products/new');
+  };
+
+  const deleteAction = (id: number) => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Are you sure that you want to delete this record?',
+      icon: 'warning',
+      buttons: ['No', 'Yes'],
+      dangerMode: true,
+    }).then((response) => {
+      if (response) {
+        remove(id);
+        swal('Deleted!', 'You record has been deleted!', 'success');
+      }
+    });
   };
 
   const ProductsList = (
@@ -35,7 +53,14 @@ export const ProductsList: React.FC = () => {
               <td>
                 <Link to={`/products/${data.id}/edit`}>Edit</Link>
               </td>
-              <td>Delete</td>
+              <td>
+                <Anchor
+                  className="delete"
+                  onClick={() => deleteAction(data.id)}
+                >
+                  Delete
+                </Anchor>
+              </td>
             </tr>
           );
         })}
@@ -46,7 +71,9 @@ export const ProductsList: React.FC = () => {
   return (
     <div>
       <h1>Products List</h1>
-      <Button onClick={goToNewProduct}>New</Button>
+      <Button className="mb-20" onClick={goToNewProduct}>
+        New
+      </Button>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       {products && ProductsList}

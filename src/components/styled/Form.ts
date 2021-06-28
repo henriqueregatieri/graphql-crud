@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
-  div {
+  div.row {
     margin: 5px 0;
   }
   label {

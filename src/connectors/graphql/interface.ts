@@ -5,5 +5,5 @@ export interface ConnectorMethods<AllData, SingleItemData, Type> {
   useGetById: (id: string) => SingleItemData;
   create: (product: Type) => Promise<FetchResult<Type>>;
   update: (product: Type) => Promise<FetchResult<Type>>;
-  remove: (product: Type) => Promise<FetchResult<Type>>;
+  remove: (id: number) => Promise<FetchResult<Type>>;
 }

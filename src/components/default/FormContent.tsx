@@ -22,7 +22,7 @@ export const FormContent = ({
     <Form onSubmit={handleSubmit}>
       {fields.map((field: Field, key: number) => {
         return (
-          <div key={key}>
+          <div className="row" key={key}>
             <label>{field.name}:</label>
             <input
               className="text"
@@ -33,7 +33,7 @@ export const FormContent = ({
           </div>
         );
       })}
-      <div>
+      <div className="mt-20">
         <InputButton type="submit"></InputButton>
         <Button onClick={goToList}>Cancel</Button>
       </div>

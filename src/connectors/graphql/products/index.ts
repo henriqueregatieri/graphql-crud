@@ -58,13 +58,8 @@ export const ProductsConnector = (): ConnectorMethods<
     refetchQueries: [{ query: ProductOperators.getAll }],
   });
 
-  const remove = (product: ProductData) => {
-    removeMutation({ variables: product });
-    return removeMutation({
-      variables: {
-        id: product.id,
-      },
-    });
+  const remove = (id: number) => {
+    return removeMutation({ variables: { id } });
   };
 
   return {

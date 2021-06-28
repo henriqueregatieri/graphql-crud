@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const style = `
-  margin: 20px 10px 20px 0;
+  margin-right: 10px;
   padding: 5px 10px;
   cursor: pointer;
 `;
