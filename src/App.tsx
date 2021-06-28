@@ -1,13 +1,14 @@
 import React from 'react';
+import { StyledContainer } from './components/default/container';
 import { DefaultRoutes } from './routes/default';
 import { ProductsRoutes } from './routes/products';
 
 const App: React.FC = () => {
   return (
-    <div className="container">
+    <StyledContainer className="container">
       <DefaultRoutes />
       <ProductsRoutes />
-    </div>
+    </StyledContainer>
   );
 };
 
