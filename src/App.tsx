@@ -1,10 +1,10 @@
 import React from 'react';
-import { DefaultRoutes } from './routes/DefaultRoutes';
-import { ProductsRoutes } from './routes/ProductsRoutes';
+import { DefaultRoutes } from './routes/default';
+import { ProductsRoutes } from './routes/products';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className="container">
       <DefaultRoutes />
       <ProductsRoutes />
     </div>
